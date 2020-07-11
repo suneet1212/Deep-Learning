@@ -43,14 +43,14 @@
 </ul>
 <br>
 
-### Regularisation :
-(or weight decay) 
-#### L2 regularisation:
+### Regularization :
+(or **weight decay**) 
+#### L2 regularization:
 <p>
 Logistic: 
 
 ``` python
-regularisation term = (lambd/(2*m))*||w||^2 = (lambd/(2*m))*((w.T).w)
+regularization term = (lambd/(2*m))*||w||^2 = (lambd/(2*m))*((w.T).w)
 ```
 <br> NN : 
 ``` python
@@ -65,7 +65,7 @@ W[l] := W[l](1-alpha/m) - (alpha)*dW[l]
 ```
 <br>
 
-#### Dropout regularisation: 
+#### Dropout regularization: 
 <p>
 (Used most commonly for computer vision)
 This helps to make the NN architecture smaller and thereby helps to avoid overfitting. By not relying on only one feature, the weights are spread out across the layers. This causes shrinking of the weights which similar to L2 norm. We can have different keep_prob values for different layers. We can also have a keep_prob for the input layer(not suggested).
@@ -97,7 +97,7 @@ a[l] /= keep_prob    # In order to not reduce the value tof the the next layer i
 
 #### Early Stopping:
 <p>
-Plot dev set error and trainset error while training. Then stop the algorithm when the dev set error starts to increase aftr reaching the minima.
+Plot dev set error and trainset error while training. Then stop the algorithm when the dev set error starts to increase after reaching the minima.
 <br>
 Disadvantage: it tries to couple minimising cost and decreasing overfitting together. Ideally we would try to handle the two problems seperately.
 <br>
@@ -106,9 +106,9 @@ Advantage: We need not try many values of lambda to choose the best vale of regu
 <br>
 <br>
 
-### Useful Practices for Optimisation:
-#### Normalisation:
-<p>Normalisation is required when we have data of different scales  
+### Useful Practices for Optimization:
+#### Normalization:
+<p>Normalization is required when we have data of different scales  
 
 ```python
 X := X-mu
@@ -119,7 +119,7 @@ Use the same mu and sigma for both train set and test set
 </p>
 Advantages:
 * Speeds up training
-* For un-normalised data, we must use smaller learning rate thus it will take longer to converge.
+* For un-normalized data, we must use smaller learning rate thus it will take longer to converge.
 
 #### Vanishing/Exploding Gradients:
 <p>If we have a very deep network, when we calculate the gradients for back prop, from chain rule, we get the gradients to be the multiplication of all the derivative terms from the layers ahead. If there are many gradients smaller than 1 then the product becomes very small and in turn a very small update(after multiplying with a small learning rate) is done to the weight. Thus there is no significant change to the weights and thus the gradient descent does not learn anything. Similarly, gradient explodes when the values are greater than 1 and thus causing gradient descent to not converge.</p>
@@ -128,17 +128,17 @@ Advantages:
 for 1 neuron: z = w1x1+w2x2+......+wnxn +b
 large n => z is large =>  we want w_i to be smaller.
 We would want to set the 
-Initialisation: 
+Initialization: 
 
-* Relu => 
+* For Relu => 
 ``` python
 W[l] = np.random.randn(shape) * np.sqrt(2/n[l-1])
 ```
-* tanh => 
+* For tanh => 
 ``` python
 W[l] = np.random.randn(shape) * np.sqrt(1/n[l-1])  (Xavier's initialisation)
 ```
-* tanh =>
+* For tanh =>
 ``` python
 W[l] = np.random.randn(shape) * np.sqrt(1/(n[l-1]+n[l]))  (Yoshua Bengoi's initialisation)
 ```
@@ -166,7 +166,7 @@ Now compute error:
 
 ## Week 2:
 ### Mini-Batch Gradient Descent: 
-<p>When we have a large data, if we update our parametrs at the end of after going through the whole data set, it would take a lot of time for the cost to converge to a smaller value. To rectify this we use mini batches. We update the parameters after a number of data, for eg 1000. This will help the algorithm to clet the cost onverge to a minima faster and in lesser number of iterations.
+<p>When we have a large data, if we update our parameters at the end of after going through the whole data set, it would take a lot of time for the cost to converge to a smaller value. To rectify this we use mini batches. We update the parameters after a number of data, for eg 1000. This will help the algorithm to  let the cost onverge to a minima faster and in lesser number of iterations.
 </p>
 <br>
 <p>
@@ -174,12 +174,12 @@ Mini-batch size is also a hyperparameter.
 <br>
 Batch Gradient Descent: Takes too long per iteration.
 <br>
-Stochastic Gradient Descent: We loose vectorisation for the number of examples.
+Stochastic Gradient Descent: We lose the advantage provided by vectorization for the number of examples.
 <br>
-Mini-Batch Gradient Descent: Quicker updates and we do not loose vectorisation.
+Mini-Batch Gradient Descent: Quicker updates and we do not lose vectorization.
 </p>
 <p>
-Usually we keep min-bbatch size as powers of 2.
+Usually we keep min-batch size as powers of 2, since the advanced libraries like tensorflow and pytorch provide better performance.
 </p>
 
 ### Exponentially Weighted Averages
@@ -212,7 +212,7 @@ sdb = beta2*sdb + (1-beta2)db^2
 W = W - alpha * dW/((sdW)^0.5 +epsilon) # epsilon = 10^(-8)
 b = b - alpha * db/((sdb)^0.5 +epsilon) # epsilon = 10^(-8)
 ```
-### Adam Optimisation Algorithm:
+### Adam Optimization Algorithm:
 <p>Also known as Adaptive Moments Estimation</p>
 
 ```python
@@ -263,7 +263,7 @@ b = b - alpha * Vdb/((sdb)^0.5 +epsilon) # epsilon = 10^(-8)
 
 ### How to Tune:
 * Instead of using a grid, sample the hyperparameters randomly in a range.
-* Use a course to fine search process, ie sample points more densely closer to the region which gives least error.
+* Use a coarse to fine search process, ie sample points more densely closer to the region which gives least error.
 * For hyperparameters like number of layers/no of units, we can just sample random natural numbers on the number line.
 * For hyperparameters like learning rate or beta(if using exponentially weighted averages), since it is more sensitive at some regions than other it is better to sample randomly on the logarithmic scale.
 ``` python
@@ -280,24 +280,24 @@ alpha = 10**r
 	1. Used when we do have computational resources to train many models at a time.
 	2. Run many models at the same time and choose the one which will give the least error.
 
-### Batch Normalisation:
-* In a NN, we can normalise before taking the activation or even after it. Normalising before taking activation is more common.
-* $\mu$ = mean(Z[l])    # Z[l] is l'th layer of the NN(before taking activation), mean taken about all m examples(may be mini-batch).
-* $\sigma$ = (var(Z[l]))^0.5
-* Z_norm[l] = (Z-$\mu$)/($\sigma$^2 + $\epsilon$)^0.5
-* Z_new = $\gamma$ * Z_norm + $\beta$    # $\gamma$ and $\beta$ are parameters for layer l.  
-* Update the parameters as $\beta$ = $\beta$ - learning_rate * d$\beta$  # or any other optimisation algorithm
-* Now when we compute mean, b[l] irrespective of the value gets cancellled out. Thus we do not need b[l] parameters wherever we perform batch normalisation
+### Batch Normalization:
+* In a NN, we can normalize before taking the activation or even after it. Normalizing before taking activation is more common.
+* mu = mean(Z[l])    # Z[l] is l'th layer of the NN(before taking activation), mean taken about all m examples(may be mini-batch).
+* sigma = (var(Z[l]))^0.5
+* Z_norm[l] = (Z-mu)/(sigma^2 + epsilon)^0.5
+* Z_new = gamma * Z_norm + beta    # gamma and beta are parameters for layer l.  
+* Update the parameters as beta = beta - learning_rate * dbeta  # or any other optimization algorithm
+* **Now when we compute mean, b[l] irrespective of the value gets cancelled out. Thus we do not need b[l] parameters wherever we perform batch normalization.**
 
 #### Why does Batch Norm Works:
-* Normalisation speeds up the network. Similarly batch normalisation does it on all layers.
+* Normalization speeds up the network. Similarly batch normalization does it on all layers.
 * It makes weights deeper in the NN more robust to changes in initial layers.
 * If the NN is trained to classify black cats, then if we change the inputs from black cats to coloured cats, then the network would not be able to classify them due to a covariance shift.
-* Batch norm helps one layer to learn more independent of the layers before it, since the mean and variance is decided by the parameters which changes slowly.
+* Batch norm helps one layer to learn more independent of the layers before it. Since the mean and variance does not change due to the previous layers' weights. Hence there is a lesser "covariance shift" than before owing to a better performance.
 * Since the batch norm takes the mean and var on the mini-batches, there is a slight noise added to it. This noise propagates forward and it also causes a similar effect like dropout but it is less significant.
 
 #### Batch Norm at test time:
-* During trainig take an exponential weighted average of the mean and variance. Then use the latest values of the mean and variance for the test set.
+* During training take an exponentially weighted average of the mean and variance. Then use the latest values of the mean and variance for the test set.
 
 ### Softmax Regression: 
 * Softmax activation funtion -> A = Z/sum(exp(Z)) # sum is over all the neurons. 
@@ -306,14 +306,14 @@ alpha = 10**r
 * Loss function = - sum(y * log(y_predicted))
 
 
-## Guidlines:
+## Guidelines:
 <ul>
-<li>Make sure that the dev and test sets come from same distribution.</li>
+<li> <b>Make sure that the dev and test sets come from same distribution.</b> </li>
 <li>If we don't need an unbiased estimate of our algorithm's performance then it is okay to tune hyperparameters on the test set</li>
-<li>When implementing regularisation, to debug gradient descent, plot cost function(including the regularisation term) with respect to number of itertion and check if it is decreasing monotonically. By not including the regularisation term we might not get a monotonic decreasing plot.</li>
+<li>When implementing regularization, to debug gradient descent, plot cost function(including the regularization term) with respect to number of iterations and check if it is decreasing monotonically. </li>
 <li>Run Gradient Checking algorithm only when debugging and do not keep it running while training data. </li>
 <li>If grad check error is high then look at components to try to look at the components which have higher error and see if there is any pattern and debug that.</li>
-<li>For grad check do not forget to include regularisation in the derivative terms.</li>
+<li>For grad check do not forget to include regularization in the derivative terms.</li>
 <li>Grad check doesn't work with drop out. For checking error while using dropout, take keep_prob = 1 and then implement grad check</li>
 <li>It might happen that gradient descent is correct when the parameters are close to 0 but the errors increase when the values deviate from 0. Then let the NN train for sometime to let the parameters deviate from 0 and then apply grad check.</li>
 
@@ -322,16 +322,16 @@ alpha = 10**r
 
 ## Programming Assignment Results:
 <ul>Week 1:
-<ul>Initialisation:
-<li>Initialisation with zeros fails to break symmetry.</li>
-<li>Also initialisation with zeros causes Z1 = 0. If we are using Relu for activation function, it implies that a1 = 0(not the case when we are using sigmoid, for igmoid a1 = 0.5). This causes all the layers ahead to have a value of 0 (except last layer since we use sigmoid for that). Now, during back prop, dZ3 = a3 - y. This has a non zero value. But when we are calculating dW /dZ2, we have to multiply dZ3 with a2.T or W3.T both of these are 0. Thus nothing is being updated to these. Also in their data set, sum of dz3 was coming out to be close to 0, this caused the NN to not learn in the bias terms as well. Thus the cost remained same.</li>
-<li>When we randomly initialise the parameters to random but big values the algorithm learns slowly, and thus will require more number of iterations over the training set to reach the optimum value. </li>
-<li>He initialisation is the best: initialise with factor of np.sqrt(2/previous_layer_dim)</li>
+<ul>Initialization:
+<li>Initialization with zeros fails to break symmetry.</li>
+<li>Also initialization with zeros causes Z1 = 0. If we are using Relu for activation function, it implies that a1 = 0(not the case when we are using sigmoid, for sigmoid a1 = 0.5). This causes all the layers ahead to have a value of 0 (except last layer since we use sigmoid for that). Now, during back prop, dZ3 = a3 - y. This has a non zero value. But when we are calculating dW /dZ2, we have to multiply dZ3 with a2.T or W3.T both of these are 0. Thus nothing is being updated to these. Also in their data set, sum of dz3 was coming out to be close to 0, this caused the NN to not learn in the bias terms as well. Thus the cost remained same.</li>
+<li>When we randomly initialize the parameters to random but big values the algorithm learns slowly, and thus will require more number of iterations over the training set to reach the optimum value. </li>
+<li>He initialization is a good choice for ReLU: initialize with factor of np.sqrt(2/previous_layer_dim)</li>
 </ul>
 <br>
-<ul>Regularisation:
-	<li>WIth no regularisation the training set error is least but the test set error is the most.</li>
-	<li>Using regularisation either dropout or L2 norm, increases the traning set error but it reducesthe test set error.</li>
+<ul>Regularization:
+	<li>With no regularization the training set error is least but the test set error is the most.</li>
+	<li>Using regularization either dropout or L2 norm, increases the training set error but it reduces the test set error.</li>
 </ul>
 <br>
 <ul>Gradient_Checking:
@@ -342,6 +342,6 @@ dTheta_approx[i] = (J(theta[1],theta[2],...theta[i]+epsilon,...)-J(theta[1],thet
 ```
 </li>
 	<li>The above calculated value is close enough to the values calculated during back-prop. Thus we can use gradient checking to verify whether our back-prop is correct or not</li>
-	<li>While fiinding gradient approx make a copy of the parameters so as to retain the original parameters. Python will make changes to all the variables which have been created not as a copy.</li>
+	<li>While finding gradient approx make a copy of the parameters so as to retain the original parameters. Python will make changes to all the variables which have been created not as a copy.</li>
 </ul>
 </ul>

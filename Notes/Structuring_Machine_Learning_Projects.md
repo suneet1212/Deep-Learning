@@ -2,7 +2,7 @@
 ## Week 1:
 <ul>Ways to improve our Machine learning algorithm 
 	<li>Collect more data</li>
-	<li>COllect more diverse data</li>
+	<li>Collect more diverse data</li>
 	<li>Train algorithm longer using gradient descent</li>
 	<li>Try different optimisation method like Adam</li>
 	<li>Try bigger network</li>
@@ -41,6 +41,7 @@ F1_score = 2 *p*r/(p+r)
 ### Comparing to Human Level Performance:
 <p>Least error possible theoretically = Bayes optimal error
 This is caused due to inaccuracies in the training set, which no human or machine can predict. Reasons for reduce in the rate of increase in the accuracies of the algorithm, after it crosses the human level performance:</p> 
+
 * Human level performance is very close to Bayes optimal error.
 * When algorithm performs worse than human level performance, we can still feed it human labelled data to improve it/manual error analysis/ better analysis of bias/variance.
 * Rate of improvement of accuracies will increase at a faster rate when it is yet to surpass the human level performance.
@@ -55,15 +56,18 @@ Comparing the training and human level error, we can conclude whether we need to
 
 ### Improving performance for supervised learning:
 <p>Assumptions:</p>
+
 * We can reduse avoidable bias.
 * Training set generalises well to dev set and test set
 
 <p>To reduce avoidable bias:</p>
+
 * Train bigger model
 * Train longer/better optimisation algorithm (like RMSprop/momentum/Adam)
 * Change NN architecture
 <br>
 <p>To reduce Variance:</p>
+
 * More data
 * Regularisation
 * Change NN architecture
@@ -79,6 +83,7 @@ Comparing the training and human level error, we can conclude whether we need to
 <p>Again here to see whether it is worth the time to go on correcting labels on the dev/test set, follow the psame process that we had to do for mislabelled data.
 <br>
 For mislabelled data in the training set, as long as the mislabelled data is just due to random errors and it is not systematically made, it would not do much harm to the algorithm.</p>
+
 * Apply the same process to the dev and test set to make sure they come from the same set.
 * Consider examining examples your algorithm got right as well as ones it got wrong.
 * Train and dev/test data may come from slightly different distributions.

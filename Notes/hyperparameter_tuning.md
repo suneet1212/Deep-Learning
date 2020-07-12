@@ -1,7 +1,7 @@
 # Hyper-Parameter Tuning
 ## Week 1
 ### Splitting Data
-<ul>Hyperparameters: <li>#layers</li> <li>#hidden_units</li> <li>learning_rate</li> <li>activation_function</li> <li>regularization_parameter</li></ul>
+<ul>Hyperparameters: <li>No of layers</li> <li>No of hidden_units</li> <li>learning_rate</li> <li>activation_function</li> <li>regularization_parameter</li></ul>
 <br>
 
 <p>data splitting: train/dev/test
@@ -118,6 +118,7 @@ X := X/(sigma)
 Use the same mu and sigma for both train set and test set
 </p>
 Advantages:
+
 * Speeds up training
 * For un-normalized data, we must use smaller learning rate thus it will take longer to converge.
 
@@ -140,7 +141,7 @@ W[l] = np.random.randn(shape) * np.sqrt(1/n[l-1])  (Xavier's initialisation)
 ```
 * For tanh =>
 ``` python
-W[l] = np.random.randn(shape) * np.sqrt(1/(n[l-1]+n[l]))  (Yoshua Bengoi's initialisation)
+W[l] = np.random.randn(shape) * np.sqrt(1/(n[l-1]+n[l]))  (Yoshua Bengio's initialisation)
 ```
 </p>
 
@@ -236,8 +237,9 @@ b = b - alpha * Vdb/((sdb)^0.5 +epsilon) # epsilon = 10^(-8)
 
 ### Learning Rate Decay:
 <p>Different ways to decay alpha</p>
-* alpha = alpha0/(1+decay_rate * epoch_num)
-* alpha = (0.95^epoch_num) * alpha0
+
+* alpha = alpha0/(1+decay_rate*epoch_num)
+* alpha = (0.95^epoch_num)*alpha0
 * alpha = alpha0*k/epoch_num^0.5   #K is another hyperparameter
 * alpha = alpha0*k/mini_batch_no^0.5 
 * alpha takes discrete values, for certain part of the training, then reduced for another set. And it keeps reducing for discrete values.
@@ -258,7 +260,7 @@ b = b - alpha * Vdb/((sdb)^0.5 +epsilon) # epsilon = 10^(-8)
 		<li>No of layers</li>
 		<li>learning rate decay</li>
 	</ul></li>
-	<li>Need not tune: the hyperparameters of Adam optimisation, ie $\beta$1 = 0.9,$\beta$2 = 0.999, epsilon = 10^-8</li>
+	<li>Need not tune: the hyperparameters of Adam optimisation, ie beta1 = 0.9,beta2 = 0.999, epsilon = 10^-8</li>
 </ol>
 
 ### How to Tune:
@@ -273,6 +275,7 @@ alpha = 10**r
 ```
 <br>
 <p>Two different approaches to tuning hyperpameters</p>
+
 * Panda approach:
 	1. Used when we do not have much computational resources and thus we can only train one model at a time.
 	2. Watch the learning curve and adjust parameters manually and keep changing the parameters each day when it is train for many days.
@@ -286,7 +289,7 @@ alpha = 10**r
 * sigma = (var(Z[l]))^0.5
 * Z_norm[l] = (Z-mu)/(sigma^2 + epsilon)^0.5
 * Z_new = gamma * Z_norm + beta    # gamma and beta are parameters for layer l.  
-* Update the parameters as beta = beta - learning_rate * dbeta  # or any other optimization algorithm
+* Update the parameters as beta = beta - learning_rate * dbeta          # or any other optimization algorithm
 * **Now when we compute mean, b[l] irrespective of the value gets cancelled out. Thus we do not need b[l] parameters wherever we perform batch normalization.**
 
 #### Why does Batch Norm Works:
